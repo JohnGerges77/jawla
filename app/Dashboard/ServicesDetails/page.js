@@ -1,14 +1,14 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { getSpecialServices, deleteSpecialService, updateSpecialServiceState } from "../../servicesApi/SPecialServices";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Spinner from "@/app/_components/Spinner";
+import { Suspense } from "react";
 
-function BookingDetails() {
+function BookingDetailsContent() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const [booking, setBooking] = useState(null);
@@ -45,7 +45,7 @@ function BookingDetails() {
   }, [id]);
 
   const getBookingType = (booking) => {
-    if (booking.receivePlace ) return "car";
+    if (booking.receivePlace) return "car";
     if (booking.startPlace || booking.destinations) return "tour guide";
     if (booking.description) return "package";
     return null;
@@ -138,8 +138,7 @@ function BookingDetails() {
           <input
             type="text"
             value={price}
-         
-            onChange={(e) => setPrice(e.target.value)||0}
+            onChange={(e) => setPrice(e.target.value || 0)}
             className="w-full p-2 rounded bg-[#1E2D4B] text-[#F2CD7E] border border-gray-600 focus:outline-none focus:border-[#F2CD7E]"
             placeholder="Enter price (required)"
           />
@@ -181,4 +180,10 @@ function BookingDetails() {
   );
 }
 
-export default BookingDetails;
+export default function BookingDetails() {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <BookingDetailsContent />
+    </Suspense>
+  );
+}

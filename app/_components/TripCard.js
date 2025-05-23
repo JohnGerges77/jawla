@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { getFavorites } from "../servicesApi/FavoritesApi";
 import { useFavorites } from "../context/FavoritesContext";
 import { toast } from "react-toastify";
-
+import { FaCalendarDays } from "react-icons/fa6"
 function TripCard({
   id,
   title,
@@ -136,13 +136,8 @@ function TripCard({
 
         <div className="flex justify-between">
           <div>
-            <div className="flex gap-1">
-              <Image
-                src="/solar_calendar-bold.png"
-                width={18}
-                height={18}
-                alt=""
-              />
+            <div className="flex gap-1  items-center">
+              <FaCalendarDays />
               <span>{duration} days</span>
             </div>
 

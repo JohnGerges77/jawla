@@ -1,17 +1,18 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { getAllTrips, getTripReservations } from "../DashboardApis/TripsApis"; // ⬅️ استورد الدالة الجديدة
+import { getAllTrips, getTripReservations } from "../DashboardApis/TripsApis";
 import Spinner from "@/app/_components/Spinner";
+import { Suspense } from "react";
 
-export default function TripDetailsPage() {
+function TripDetailsContent() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const [trip, setTrip] = useState(null);
-  const [reservations, setReservations] = useState([]); // ⬅️ state للحجوزات
+  const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [reservationsLoading, setReservationsLoading] = useState(true); // ⬅️ state لتحميل الحجوزات
+  const [reservationsLoading, setReservationsLoading] = useState(true);
 
   useEffect(() => {
     if (!id) {
@@ -58,7 +59,7 @@ export default function TripDetailsPage() {
   const images = Array.isArray(trip.images) ? trip.images : [];
 
   return (
-    <div className="min-h-screen  text-white p-6 md:p-12 rounded-lg">
+    <div className="min-h-screen text-white p-6 md:p-12 rounded-lg">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-4xl font-extrabold mb-4 tracking-tight">{trip.title || "N/A"}</h2>
         <p className="text-gray-300 mb-8 text-lg leading-relaxed">{trip.description || "No description available"}</p>
@@ -139,7 +140,6 @@ export default function TripDetailsPage() {
             )}
           </div>
 
-        
           <div className="px-6 py-4 bg-gradient-to-br from-[#0c1f47] to-[#161132] rounded-xl shadow-md">
             <h3 className="text-xl font-semibold mb-4">Reservations</h3>
             {reservationsLoading ? (
@@ -148,9 +148,7 @@ export default function TripDetailsPage() {
               <ul className="list-disc pl-5 text-gray-200">
                 {reservations.map((reservation) => (
                   <li key={reservation.id} className="mb-2">
-                    ID: {reservation.user_Id} - 
-                    Total Price: {reservation.total_price || "N/A"} - 
-                    Date: {reservation.dateCreated}
+                    ID: {reservation.user_Id} - Total Price: {reservation.total_price || "N/A"} - Date: {reservation.dateCreated}
                   </li>
                 ))}
               </ul>
@@ -170,5 +168,13 @@ export default function TripDetailsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function TripDetailsPage() {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <TripDetailsContent />
+    </Suspense>
   );
 }

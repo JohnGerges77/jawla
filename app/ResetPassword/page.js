@@ -1,11 +1,12 @@
-"use client";
+'use client';
 import React, { useState } from "react";
 import Input from "../_components/Input";
 import { useRouter, useSearchParams } from "next/navigation";
 import { resetPassword } from "../servicesApi/resetPasswordApi";
 import Image from "next/image";
+import { Suspense } from "react";
 
-function ResetPassword() {
+function ResetPasswordContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -105,4 +106,10 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={<p className="text-center text-white">Loading...</p>}>
+      <ResetPasswordContent />
+    </Suspense>
+  );
+}

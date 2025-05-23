@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useEffect, useState, useRef } from "react";
 import DetailsImages from "../_components/DetailsImages";
 import Image from "next/image";
@@ -11,10 +11,12 @@ import { addReservation } from "../servicesApi/ReservationApi";
 import Spinner from "../_components/Spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
-function Page() {
+// Component منفصل بيستخدم useSearchParams و useRouter
+function BookingContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const tripId = searchParams.get("id");
@@ -61,11 +63,9 @@ function Page() {
         pauseOnHover: true,
         draggable: true,
       });
-       
-        setTimeout(() => {
-          router.push("/LogIn");
-        }, 2000);
-
+      setTimeout(() => {
+        router.push("/LogIn");
+      }, 2000);
     }
     if (paymentError) {
       toast.error(paymentError, {
@@ -159,9 +159,11 @@ function Page() {
   if (loading) return <Spinner />;
 
   if (!userData || !userData.id) {
-    return      <p className="text-red-500 text-center">
+    return (
+      <p className="text-red-500 text-center">
         You must be logged in to proceed with payment.
-      </p>; 
+      </p>
+    );
   }
 
   const images = Array.isArray(trip?.images) ? trip.images : [];
@@ -174,7 +176,6 @@ function Page() {
           <h1 className="text-secondry font-semibold text-4xl pb-7">Payment</h1>
           <p className="text-xl">Pay securely using PayPal</p>
         </div>
-
         <div className="space-y-4">
           <div className="flex items-center justify-between px-5 text-xl font-semibold bg-[#D9D9D9] backdrop-blur-sm p-3 rounded-lg sm:w-[80%]">
             <span className="text-black text-xl font-semibold flex gap-3 pl-5 items-center">
@@ -182,19 +183,15 @@ function Page() {
               {userData.email}
             </span>
           </div>
-
           <div className="flex items-center justify-between px-5 text-xl font-semibold bg-[#D9D9D9] backdrop-blur-sm p-3 rounded-lg sm:w-[80%]">
             <span className="text-black">Persons</span>
             <span className="text-black">{persons}</span>
           </div>
-
           <div className="flex items-center justify-between px-5 text-xl font-semibold bg-[#D9D9D9] backdrop-blur-sm p-3 rounded-lg sm:w-[80%]">
             <span className="text-black">Total</span>
             <span className="text-black">{total} EGP</span>
           </div>
-
           <div className="bg-[#FFFFFF70] sm:w-[50%] h-[2px] mt-3 ml-24"></div>
-
           <div
             ref={paypalButtonContainer}
             id="paypal-button-container"
@@ -204,7 +201,6 @@ function Page() {
               <p className="text-white">Loading PayPal button...</p>
             )}
           </div>
-
           <Script
             src={`https://www.paypal.com/sdk/js?client-id=AW1TdvpSGbIM5iP4HJNI5TyTmwpY9Gv9dYw8_8yW5lYIbCqf326vrkrp0ce9TAqjEGMHiV3OqJM_aRT0`}
             strategy="lazyOnload"
@@ -216,4 +212,10 @@ function Page() {
   );
 }
 
-export default Page;
+export default function Page() {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <BookingContent />
+    </Suspense>
+  );
+}
