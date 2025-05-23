@@ -1,24 +1,25 @@
-
-'use client'
+"use client";
 import React, { useEffect, useState, useRef } from "react";
 import DetailsImages from "../_components/DetailsImages";
 import Image from "next/image";
-import { getProfile } from '../servicesApi/ProfileApi';
+import { getProfile } from "../servicesApi/ProfileApi";
 import { useSearchParams, useRouter } from "next/navigation";
 import { getTripById } from "../servicesApi/GetTripById";
 import Script from "next/script";
-import { addPayment } from '../servicesApi/PaymentApi';
-import { addReservation } from '../servicesApi/ReservationApi'; // استيراد API الحجز
+import { addPayment } from "../servicesApi/PaymentApi";
+import { addReservation } from "../servicesApi/ReservationApi";
+import Spinner from "../_components/Spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-// Force client-side rendering
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 function Page() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const tripId = searchParams.get("id"); // e.g., "1071"
-  const total = Number(searchParams.get("total")) || 1; // e.g., 7500
-  const persons = Number(searchParams.get("persons")) || 1; // e.g., 2
+  const tripId = searchParams.get("id");
+  const total = Number(searchParams.get("total")) || 1;
+  const persons = Number(searchParams.get("persons")) || 1;
   const [trip, setTrip] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -27,13 +28,11 @@ function Page() {
   const paypalButtonContainer = useRef(null);
   const [isPaypalLoaded, setIsPaypalLoaded] = useState(false);
 
-  // جلب userData مباشرة في بداية الـ Component
   const fetchInitialData = async () => {
     try {
       const profileData = await getProfile();
-      console.log("User Data from getProfile:", profileData);
       if (!profileData || !profileData.id) {
-        throw new Error("User ID not found in profile data.");
+        throw new Error("No authentication token found. You must be logged in.");
       }
       setUserData(profileData);
 
@@ -43,29 +42,54 @@ function Page() {
       }
     } catch (err) {
       setError(err.message || "Failed to load initial data.");
-      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  // استدعاء fetchInitialData مرة واحدة عند تحميل الـ Component
   useEffect(() => {
     fetchInitialData();
   }, []);
 
-  // PayPal Button Configuration
+  useEffect(() => {
+    if (error) {
+      toast.error('You must be logged in to proceed with payment.', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+       
+        setTimeout(() => {
+          router.push("/LogIn");
+        }, 2000);
+
+    }
+    if (paymentError) {
+      toast.error(paymentError, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  }, [error, paymentError]);
+
   const createOrder = (data, actions) => {
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: (total / 100).toFixed(2), // Convert EGP to USD (assuming 1 EGP = 0.01 USD for simplicity)
-            currency_code: "USD" // PayPal requires USD for Sandbox
+            value: (total / 100 / 51).toFixed(2),
+            currency_code: "USD",
           },
-          description: `Payment for Trip ID: ${tripId}, Persons: ${persons}`
-        }
-      ]
+          description: `Payment for Trip ID: ${tripId}, Persons: ${persons}`,
+        },
+      ],
     });
   };
 
@@ -73,75 +97,77 @@ function Page() {
     try {
       await actions.order.capture();
       const paymentData = {
-        id: 0, // يولد من السيرفر
-        type: "PayPal", // قيمة افتراضية
-        amount: persons, // عدد الأشخاص
-        processNumber: data.orderID, // معرف الطلب من PayPal
-        user_Id: userData.id, // الـ User ID من userData
-        trip_Id: Number(tripId) // معرف الرحلة
+        id: 0,
+        type: "PayPal",
+        amount: persons,
+        processNumber: data.orderID,
+        user_Id: userData.id,
+        trip_Id: Number(tripId),
       };
-      // استدعاء API الدفع
       const paymentResponse = await addPayment(paymentData);
-      const paymentId = paymentResponse.id; // جلب paymentId من الاستجابة
+      const paymentId = paymentResponse.id;
 
-      // إضافة الحجز بعد نجاح الدفع
       const reservationData = {
-        user_Id: userData.id, // الـ User ID من userData
-        trip_Id: Number(tripId), // معرف الرحلة
-        paymentId: paymentId, // الـ paymentId من استجابة addPayment
-        total_price: total, // السعر الكلي من searchParams
-        dateCreated: new Date().toISOString() // تاريخ الحالي
+        user_Id: userData.id,
+        trip_Id: Number(tripId),
+        paymentId: paymentId,
+        total_price: total,
+        dateCreated: new Date().toISOString(),
       };
       await addReservation(reservationData);
 
-      router.push("/Congratulation"); // Navigate on success
+      router.push("/Congratulation");
     } catch (error) {
       setPaymentError("Failed to process payment or save reservation. Please try again.");
-      console.error("Payment or Reservation API error:", error);
     }
   };
 
   const onError = (err) => {
     setPaymentError("An error occurred during payment. Please try again.");
-    console.error("PayPal error:", err);
   };
-
 
   useEffect(() => {
     let timer;
     const checkPaypal = () => {
-      if (typeof window !== "undefined" && window.paypal && paypalButtonContainer.current && !isPaypalLoaded) {
+      if (
+        typeof window !== "undefined" &&
+        window.paypal &&
+        paypalButtonContainer.current &&
+        !isPaypalLoaded
+      ) {
         window.paypal
           .Buttons({
             createOrder: createOrder,
             onApprove: onApprove,
-            onError: onError
+            onError: onError,
           })
           .render(paypalButtonContainer.current);
         setIsPaypalLoaded(true);
-        clearTimeout(timer); // Stop the timeout
+        clearTimeout(timer);
       } else if (!isPaypalLoaded) {
-        timer = setTimeout(checkPaypal, 500); // Retry every 500ms
+        timer = setTimeout(checkPaypal, 500);
       }
     };
 
     if (userData && userData.id) {
-      checkPaypal(); // فقط لما userData جاهز
+      checkPaypal();
     }
 
-    // Cleanup timeout on unmount
     return () => clearTimeout(timer);
-  }, [userData]); // تعتمد على userData
+  }, [userData]);
 
-  if (loading) return <p className="text-white text-center">Loading...</p>;
-  if (error) return <p className="text-red-500 text-center">{error}</p>;
+  if (loading) return <Spinner />;
+
   if (!userData || !userData.id) {
-    return <p className="text-red-500 text-center">Failed to load user ID from profile data.</p>;
+    return      <p className="text-red-500 text-center">
+        You must be logged in to proceed with payment.
+      </p>; 
   }
 
   const images = Array.isArray(trip?.images) ? trip.images : [];
   return (
     <div className="flex flex-col md:flex-row justify-start items-start min-h-screen bg-primary text-white p-6 md:pr-28">
+      <ToastContainer />
       <DetailsImages images={images} />
       <div className="w-full md:pl-10 mt-28">
         <div className="relative bottom-12 text-center mr-24">
@@ -167,16 +193,18 @@ function Page() {
             <span className="text-black">{total} EGP</span>
           </div>
 
-          {paymentError && <p className="text-red-500 text-center">{paymentError}</p>}
-
           <div className="bg-[#FFFFFF70] sm:w-[50%] h-[2px] mt-3 ml-24"></div>
 
-          {/* PayPal Button */}
-          <div ref={paypalButtonContainer} id="paypal-button-container" className="sm:w-[80%] mt-7">
-            {!isPaypalLoaded && <p className="text-white">Loading PayPal button...</p>}
+          <div
+            ref={paypalButtonContainer}
+            id="paypal-button-container"
+            className="sm:w-[80%] mt-7"
+          >
+            {!isPaypalLoaded && (
+              <p className="text-white">Loading PayPal button...</p>
+            )}
           </div>
 
-          {/* PayPal SDK Script */}
           <Script
             src={`https://www.paypal.com/sdk/js?client-id=AW1TdvpSGbIM5iP4HJNI5TyTmwpY9Gv9dYw8_8yW5lYIbCqf326vrkrp0ce9TAqjEGMHiV3OqJM_aRT0`}
             strategy="lazyOnload"

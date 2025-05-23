@@ -178,7 +178,7 @@ className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-
             name="carIds"
             value={newTrip.carIds}
             onChange={handleArrayInputChange}
-            placeholder="Car IDs (comma-separated)"
+            placeholder="Car ID"
             className="w-full py-3 px-4 bg-primary border rounded-xl"
           />
 
@@ -187,7 +187,7 @@ className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-
             name="tourguideIds"
             value={newTrip.tourguideIds}
             onChange={handleArrayInputChange}
-            placeholder="Tour Guide IDs (comma-separated)"
+            placeholder="Tour Guide ID"
             className="w-full py-3 px-4 bg-primary border rounded-xl"
           />
         </div>

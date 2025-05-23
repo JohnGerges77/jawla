@@ -1,18 +1,11 @@
-
-import React from "react";
-
 import VipTripsRow from "./VipTripsRow";
 import ComingTripsRow from "./ComingTripsRow";
 
- function Trips() {
- 
-  
+function Trips() {
   return (
     <div className=" sm:pl-12 pl-2 mt-10 ">
-     <ComingTripsRow />
-<VipTripsRow />
-   
- 
+      <ComingTripsRow />
+      <VipTripsRow />
     </div>
   );
 }

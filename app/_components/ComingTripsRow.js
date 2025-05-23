@@ -56,7 +56,7 @@ function ComingTripsRow() {
       </div>
 
       <div className="text-white text-2xl font-semibold flex justify-center mt-10">
-        Coming <b className="text-secondry px-2"> Soon </b> Journey
+        All <b className="text-secondry px-2"> Trips </b> 
       </div>
 
       {loading ? (

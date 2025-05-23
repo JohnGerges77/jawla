@@ -39,21 +39,21 @@ const TravelDetails = () => {
   const images = Array.isArray(trip.images) ? trip.images : [];
 
   return (
-    <div className="flex flex-col md:flex-row justify-start items-start min-h-screen bg-primary text-white p-6 md:pr-28">
+    <div className="flex flex-col lg:flex-row justify-start items-start min-h-screen bg-primary text-white p-6 md:pr-28">
      
       <DetailsImages images={images} />
 
       <div className="w-full md:pl-10">
         <h2 className="text-2xl font-bold mb-4">{trip.title}</h2>
-        <p className="text-gray-300 mb-6 sm:w-[80%]">{trip.description}</p>
+        <p className="text-gray-300 mb-6 lg:w-[80%]">{trip.description}</p>
 
         <div className="space-y-4">
-          <div className="flex items-center justify-between px-5 text-xl font-semibold bg-gradient-to-r from-[#FFFFFF70] to-[#FFFFFF30] backdrop-blur-sm p-3 rounded-lg sm:w-[80%]">
+          <div className="flex items-center justify-between px-5 text-xl font-semibold bg-gradient-to-r from-[#FFFFFF70] to-[#FFFFFF30] backdrop-blur-sm p-3 rounded-lg lg:w-[80%]">
             <span className="text-white">Length</span>
             <span className="text-white">{trip.duration} Days</span>
           </div>
 
-          <div className="flex items-center justify-between px-5 text-xl font-semibold bg-gradient-to-r from-[#FFFFFF70] to-[#FFFFFF30] backdrop-blur-sm p-3 rounded-lg sm:w-[80%]">
+          <div className="flex items-center justify-between px-5 text-xl font-semibold bg-gradient-to-r from-[#FFFFFF70] to-[#FFFFFF30] backdrop-blur-sm p-3 rounded-lg lg:w-[80%]">
             <span className="text-white">Persons</span>
             <div className="flex items-center space-x-4">
               <Image
@@ -99,7 +99,7 @@ const TravelDetails = () => {
             </div>
           </div>
 
-          <div className="flex justify-between items-center sm:w-[80%] bg-gradient-to-r from-[#FFFFFF70] to-[#FFFFFF30] backdrop-blur-sm p-4 rounded-lg mt-4">
+          <div className="flex justify-between items-center lg:w-[80%] bg-gradient-to-r from-[#FFFFFF70] to-[#FFFFFF30] backdrop-blur-sm p-4 rounded-lg mt-4">
             <div>
               <span className="text-white text-lg font-semibold">
                 {trip.price * persons} L.E

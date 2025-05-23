@@ -40,7 +40,7 @@ function FavoritesPage() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-2 sm:p-8">
       <h1 className="text-2xl font-bold mb-4 text-white">Favorite Trips</h1>
 
       {loading ? (
@@ -49,8 +49,7 @@ function FavoritesPage() {
         <div className="flex justify-center items-center text-secondary text-3xl mt-[10%]">
           <p>No favorite trips yet.</p>
         </div>
-      ) : (
-        <div className="mt-5 flex justify-start items-center overflow-x-auto overflow-y-hidden">
+      ) : (  <div className="mt-5 flex justify-center items-center overflow-x-auto overflow-y-hidden flex-wrap">
           {favoriteTrips.map((trip) => (
             <TripCard key={trip.id} {...trip} />
           ))}

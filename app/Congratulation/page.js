@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import "../globals.css";
+import Link from "next/link";
 
 const Confetti = () => {
   const [pieces, setPieces] = useState([]);
@@ -46,8 +47,10 @@ export default function CongratsScreen() {
       <h1 className="text-5xl font-cursive text-secondry">Congratulations</h1>
       <p className="mt-4 text-lg font-semibold">Enjoy Your trip with us</p>
       <button className="mt-6 bg-secondry px-10 py-3 text-lg font-bold text-black rounded-lg shadow-md
-       hover:bg-yellow-500 transition cursor-pointer z-50">
-        ok
+       hover:bg-yellow-500 transition cursor-pointer z-50 transition-colors duration-300">
+         <Link href='/'>
+ Go To Home
+         </Link>
       </button>
     </div>
   );

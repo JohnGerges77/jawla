@@ -1,4 +1,4 @@
-import React from "react";
+
 import { FaUser } from "react-icons/fa"; 
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { FaTicketAlt } from "react-icons/fa"; 

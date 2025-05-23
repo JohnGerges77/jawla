@@ -36,7 +36,7 @@ function DetailsImages({ images }) {
             alt="Image 2"
             width={250}
             height={310}
-            className="rounded-lg object-cover relative left-36 z-50"
+            className="rounded-lg object-cover relative left-12 sm:left-36 z-50"
           />
         </div>
  

@@ -6,7 +6,7 @@ function SideBar() {
  
   return (
     <div
-      className="h-full px-[2em] py-[2em] border-r-[1px] border-[#6e6e6e] 
+      className="h-full w-[22%] xl:w-[18%] px-[2em] py-[2em] border-r-[1px] border-[#6e6e6e] 
       bg-gradient-to-br from-[#052563] to-[#0b0b0b] fixed"
     >
 <Link href='/'>

@@ -77,17 +77,17 @@ function Page() {
           ))}
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-4 px-4">
+      <div className="grid xl:grid-cols-4 grid-cols-2 gap-4  px-4 pl-20 xl:pl-0">
         <HomeCard data={usersNumber} title="Total Users" time={day} />
         <HomeCard data={sales} title="Sales" time={day} />
         <HomeCard data={availableTrips} title="Active Trips" time={day} />
         <HomeCard data={tripsBookings} title="Trips Bookings" time={day} />
       </div>
-      <div className="flex justify-between mt-8">
-        <div className="w-[66%]">
+      <div className="flex xl:flex-row flex-col pl-20 xl:pl-0 justify-center  xl:justify-between mt-8 ">
+        <div className="xl:w-[66%] w-[80%]">
           <AreaChart salesData={salesData} />
         </div>
-        <div className="w-[31%]">
+        <div className="xl:w-[31%] w-[50%] pl-mt-0">
           <PieChart locationsData={locationsData} />
         </div>
       </div>
