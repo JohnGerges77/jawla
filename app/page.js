@@ -10,12 +10,11 @@ import ServicesPage from './_components/ServicesPage'
 function page() {
   return (
     <div className='bg-primary overflow-x-hidden'>
-     
+    
       <Hero />
       <AboutUsPage />
       <ServicesPage />
       <Trips />
-
     </div>
   )
 }
