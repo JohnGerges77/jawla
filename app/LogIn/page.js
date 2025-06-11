@@ -94,7 +94,7 @@ function LoginPage() {
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="bg-secondry text-primary w-[75%] py-3 px-5 rounded-[50px] font-bold text-xl hover:bg-white transition-colors"
+                className="bg-secondry text-primary w-[75%] py-3 px-5 rounded-[50px] font-bold text-xl hover:bg-gray-300 transition-colors"
               >
                 {loading ? "Logging in..." : "Log in"}
               </button>

@@ -58,7 +58,7 @@ function Page() {
       <div className="flex justify-end mb-4">
         <div className="bg-[#192335] p-1 space-x-1 rounded-lg flex">
           {[
-            { label: "1 Day", value: 1 },
+         
             { label: "7 Days", value: 7 },
             { label: "30 Days", value: 30 },
             { label: "90 Days", value: 90 },

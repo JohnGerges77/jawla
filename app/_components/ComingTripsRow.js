@@ -6,7 +6,7 @@ import Spinner from "./Spinner";
 
 function ComingTripsRow() {
   const Ref = useRef(null);
-  const [trips, setTrips] = useState([]); 
+  const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -15,14 +15,13 @@ function ComingTripsRow() {
       try {
         const data = await getAllTrips();
         setTrips(data);
-        console.log('trips:'+data);
+        console.log("trips:" + data);
       } catch (err) {
         setError("Failed to fetch trips.");
       } finally {
         setLoading(false);
       }
     };
-
 
     fetchTrips();
   }, []);
@@ -56,11 +55,11 @@ function ComingTripsRow() {
       </div>
 
       <div className="text-white text-2xl font-semibold flex justify-center mt-10">
-        All <b className="text-secondry px-2"> Trips </b> 
+        All <b className="text-secondry px-2"> Trips </b>
       </div>
 
       {loading ? (
-  <Spinner />
+        <Spinner />
       ) : error ? (
         <p className="text-red-500 text-center mt-5">{error}</p>
       ) : (
@@ -74,15 +73,14 @@ function ComingTripsRow() {
         >
           {trips.length > 0 ? (
             trips.map((trip) => (
-              
               <TripCard
-              key={trip.id}
-              id={trip.id}
-              title={trip.title}
-              price={trip.price}
-              duration={trip.duration}
-              main_Image={trip.main_image}
-        location={trip.location}
+                key={trip.id}
+                id={trip.id}
+                title={trip.title}
+                price={trip.price}
+                duration={trip.duration}
+                main_Image={trip.main_image}
+                location={trip.location}
               />
             ))
           ) : (

@@ -15,7 +15,7 @@ import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
-// Component منفصل بيستخدم useSearchParams و useRouter
+
 function BookingContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -79,19 +79,20 @@ function BookingContent() {
     }
   }, [error, paymentError]);
 
-  const createOrder = (data, actions) => {
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: {
-            value: (total / 100 / 51).toFixed(2),
-            currency_code: "USD",
-          },
-          description: `Payment for Trip ID: ${tripId}, Persons: ${persons}`,
+const createOrder = (data, actions) => {
+  return actions.order.create({
+    purchase_units: [
+      {
+        amount: {
+          value: (total / 49).toFixed(2),
+          currency_code: "USD",
         },
-      ],
-    });
-  };
+        description: `Payment for Trip ID: ${tripId}, Persons: ${persons}`,
+      },
+    ],
+  });
+};
+
 
   const onApprove = async (data, actions) => {
     try {

@@ -26,8 +26,8 @@ function Page() {
   };
 
   return (
-    <div className='flex items-center justify-center bg-[#F2CD7E] h-[90vh]'>
-      <div className="w-fit h-fit py-[3em] px-[3em] bg-primary text-white rounded-lg">
+    <div className='flex items-center justify-center  h-[90vh]'>
+      <div className="w-fit h-fit py-[3em] px-[3em] bg-gradient-to-br from-[#0c1f47] to-[#161132]  shadow-2xl text-white rounded-lg">
         <h2 className="w-full text-center text-[1.3em] font-bold text-[#F2CD7E] mb-4">Delete The Account</h2>
         <div>
           <span className="text-xl font-bold block">Are you sure you want to delete your account?</span>

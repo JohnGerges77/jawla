@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import DetailsImages from "../_components/DetailsImages";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { getTripById } from "../servicesApi/GetTripById";
 import { Suspense } from "react";
 
-// Component منفصل بيستخدم useSearchParams
+
 function TravelDetailsContent() {
   const searchParams = useSearchParams();
   const tripId = searchParams.get("id");
@@ -42,7 +42,7 @@ function TravelDetailsContent() {
       <DetailsImages images={images} />
       <div className="w-full md:pl-10 mt-28">
         <div className="space-y-4">
-          {/* Order ID */}
+  
           <div className="flex items-center justify-between px-5 text-xl bg-gradient-to-r from-[#FFFFFF70] to-[#FFFFFF30] backdrop-blur-sm p-3 rounded-lg sm:w-[80%] font-thin">
             <span className="text-white">Order ID</span>
             <span className="text-white">{trip.id}</span>

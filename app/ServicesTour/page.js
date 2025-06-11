@@ -70,8 +70,8 @@ function ServicesTour() {
   };
 
   return (
-    <div className="min-h-screen py-[3em] flex items-center justify-center bg-[#F2CD7E]">
-      <div className="bg-[#1E2D4B] p-8 shadow-lg w-[80%] lg:w-[50em] rounded-lg">
+    <div className="min-h-screen py-[3em] flex items-center justify-center">
+     <div className="bg-gradient-to-br from-[#0c1f47] to-[#161132]  shadow-2xl shadow-black/60 p-8  w-[80%] lg:w-[50em] rounded-lg">
         <h1 className="text-center text-[#F2CD7E] lg:text-xl md:text-xl sm:text-lg mb-4">
           Booking your own Service
         </h1>

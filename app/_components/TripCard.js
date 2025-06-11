@@ -68,7 +68,7 @@ function TripCard({
   };
 
   return (
-    <div className="mr-4 relative top-14 select-none">
+    <div className="mr-4 relative top-14">
       <div
         className="flex justify-end items-center relative right-4 top-8 cursor-pointer"
         onClick={handleFavoriteToggle}

@@ -14,10 +14,7 @@ export default {
       colors: {
         primary: '#1E2D4B',
         secondry: '#F2CD7E',
-        textColor: '#031716',
-        textHover: '#0A7075'
-
-
+    
       },
     },
   },

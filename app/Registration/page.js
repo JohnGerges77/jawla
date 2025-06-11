@@ -109,7 +109,7 @@ function RegisterPage() {
       });
       setTimeout(() => router.push("/LogIn"), 1500);
     } catch (err) {
-      // Handle API errors robustly
+    
       let errorMessage = "Registration failed. Please try again.";
       if (err.response?.data) {
         const { message, errors } = err.response.data;
@@ -223,7 +223,7 @@ function RegisterPage() {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="bg-secondry text-primary hover:bg-white w-[75%] py-3 px-5 rounded-[50px] font-bold text-xl mt-4"
+              className="bg-secondry text-primary hover:bg-gray-300 w-[75%] py-3 px-5 rounded-[50px] font-bold text-xl mt-4"
             >
               {loading ? "Registering..." : "Register"}
             </button>

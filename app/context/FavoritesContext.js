@@ -61,7 +61,7 @@ export function FavoritesProvider({ children }) {
     <FavoritesContext.Provider
       value={{ favoriteTrips, loading, addFavorite, removeFavorite, fetchFavorites }}
     >
-      <ToastContainer position="top-center" autoClose={2500} />
+  
       {children}
     </FavoritesContext.Provider>
   );

@@ -3,10 +3,10 @@ import ComingTripsRow from "./ComingTripsRow";
 
 function Trips() {
   return (
-    <div className=" sm:pl-12 pl-2 mt-10 ">
+    <section id="trips-section" className=" sm:pl-12 pl-2 mt-10 ">
       <ComingTripsRow />
       <VipTripsRow />
-    </div>
+    </section>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { updateSpecialServiceState } from '../servicesApi/SPecialServices'; // تأكد من استيراد الـ API
 
 function CustomServiceCard({ type, id, startDate, endDate, price, state, onUpdate, ...props }) {
@@ -6,22 +6,36 @@ function CustomServiceCard({ type, id, startDate, endDate, price, state, onUpdat
   const [newPrice, setNewPrice] = useState(price || '');
   const [error, setError] = useState(null);
 
-  // Determine status background color
   const statusBgColor =
     state === 'Accepted' ? 'bg-green-500' :
     state === 'Rejected' ? 'bg-red-500' :
     state === 'Pending' ? 'bg-yellow-500' : 'bg-gray-500';
 
-  // Determine price display based on state
+  
   const priceDisplay =
     state === 'Rejected' ? 'Rejected' :
     state === 'Pending' ? 'Waiting' :
     price ? `$${price}` : 'Free';
 
-  // Handle price update
+const normalizeBookingType = (type) => {
+  switch (type) {
+    case 'Car':
+      return 'car';
+    case 'Tour Guide':
+      return 'tourGuide';
+    case 'Special Trip':
+      return 'package'; 
+    default:
+      return type.toLowerCase(); 
+  }
+};
+
+
+  
   const handlePriceUpdate = async () => {
     try {
-      await updateSpecialServiceState(type, id, 'Pending', newPrice);
+     await updateSpecialServiceState(normalizeBookingType(type), id, 'Pending', newPrice);
+
       setIsEditing(false);
       setError(null);
       if (onUpdate) {

@@ -2,32 +2,32 @@
 import { useFavorites } from "../context/FavoritesContext";
 import TripCard from "../_components/TripCard";
 import { useEffect, useState } from "react";
+import Spinner from "../_components/Spinner";
 
 function FavoritesPage() {
   const { favoriteTrips, loading, fetchFavorites } = useFavorites();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
 
-  // Check for token on component mount
+
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Adjust based on your token storage method
+    const token = localStorage.getItem("token"); 
     if (token) {
       setIsAuthenticated(true);
-      fetchFavorites(); // Trigger fetch only if authenticated
+      fetchFavorites(); 
     }
     setAuthChecked(true);
   }, [fetchFavorites]);
 
-  // If auth check is not complete, show loading state
+  
   if (!authChecked) {
     return (
       <div className="p-8">
-        <p>Loading...</p>
+      <Spinner />
       </div>
     );
   }
 
-  // If user is not authenticated, show login prompt
   if (!isAuthenticated) {
     return (
       <div className="p-8">
@@ -44,7 +44,7 @@ function FavoritesPage() {
       <h1 className="text-2xl font-bold mb-4 text-white">Favorite Trips</h1>
 
       {loading ? (
-        <p>Loading...</p>
+    <Spinner />
       ) : favoriteTrips.length === 0 ? (
         <div className="flex justify-center items-center text-secondary text-3xl mt-[10%]">
           <p>No favorite trips yet.</p>

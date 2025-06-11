@@ -1,5 +1,4 @@
-"use client"; // Add this since the component might be used in a client-side context
-
+"use client"; 
 import Link from 'next/link';
 import Image from 'next/image'; 
 import React from 'react';

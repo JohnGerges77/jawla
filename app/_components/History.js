@@ -1,8 +1,6 @@
-"use client"; // Add this if the component uses client-side features
-
 import Link from 'next/link';
 import Image from 'next/image'; 
-import React from 'react';
+
 
 function History() {
   return (
@@ -19,7 +17,7 @@ function History() {
                   height={24}
                   className='h-[1.5em]'
                 />
-                <h3 className='text-[1.3em] text-white'>History</h3>
+                <h3 className='text-[1.3em] text-white'> My Bookings</h3>
               </div>
               <button>
                 <Image

@@ -29,7 +29,7 @@ function Page() {
           phone: userData.phone || ''
         }));
       } catch (error) {
-        console.error("❌ Error fetching profile:", error.message);
+        console.error(" Error fetching profile:", error.message);
       } finally {
         setLoading(false);
       }
@@ -69,7 +69,7 @@ function Page() {
       toast.success("Password updated successfully!");
       setFormData(prev => ({ ...prev, oldpassword: '', newpassword: '' }));
     } catch (error) {
-      console.error("❌ Error updating password:", error.response?.data || error.message);
+      console.error(" Error updating password:", error.response?.data || error.message);
       if (error.response?.data?.errors === "Invalid Password") {
         toast.error("The current password is incorrect. Please try again.");
       } else {
@@ -81,11 +81,11 @@ function Page() {
   if (loading) return <p className="text-center text-white">Loading profile...</p>;
 
   return (
-    <div className="flex items-center justify-center bg-[#F2CD7E] min-h-screen px-4">
-      <div className="bg-[#1E2D4B] p-6 sm:p-8 shadow-lg w-full max-w-[800px] rounded-lg">
+    <div className="flex items-center justify-center min-h-screen px-4">
+      <div className="bg-gradient-to-br from-[#0c1f47] to-[#161132]  shadow-2xl p-6 sm:p-8 w-full max-w-[800px] rounded-lg">
         <h1 className="text-2xl font-bold text-[#F2CD7E] mb-4 text-center">Settings</h1>
 
-        {/* تحديث البيانات الشخصية */}
+        
         <form className="mt-4" onSubmit={handleUpdateProfile}>
           <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
             <ServicesFormInputs label="Username" type="text" name="username" value={formData.username} onChange={handleChange} />
@@ -95,7 +95,7 @@ function Page() {
           <button type="submit" className="w-full md:w-[60%] text-xl font-bold bg-white text-[#1E2D4B] py-2 rounded-lg mt-4 mx-auto block">Save Profile</button>
         </form>
 
-        {/* تغيير كلمة المرور */}
+   
         <form className="mt-6" onSubmit={handleUpdatePassword}>
           <h2 className="text-xl font-bold text-[#F2CD7E] mb-4 text-center">Change Password</h2>
           <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
@@ -105,7 +105,7 @@ function Page() {
           <button type="submit" className="w-full md:w-[60%] text-xl font-bold bg-white text-[#1E2D4B] py-2 rounded-lg mt-4 mx-auto block">Change Password</button>
         </form>
 
-        {/* حذف الحساب */}
+ 
         <div className="mt-6 text-center">
           <Link href='/DeleteAccount'>
             <button className="w-full md:w-[60%] text-xl font-bold bg-red-600 text-white py-2 rounded-lg mx-auto block">Delete Account</button>

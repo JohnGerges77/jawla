@@ -30,7 +30,7 @@ function Page() {
     fetchTrips();
   }, []);
 
-  // Function to update trip state after price change
+
   const handleUpdateTrip = (updatedTrip) => {
     setTrips((prevTrips) =>
       prevTrips.map((trip) =>
