@@ -32,7 +32,7 @@ const tapsData = [
       title: 'Cars',
    
     },
-
+  
  
   ]
 function TapsList({ }) {
