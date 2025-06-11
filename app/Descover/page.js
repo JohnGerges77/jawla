@@ -11,7 +11,7 @@ function Page() {
     <div>
       <div className="bg-primary">
         <div className="flex flex-col items-center justify-center text-white p-4 ">
-          <h1 className="text-primary text-1xl md:text-3xl font-semibold mb-3">
+          <h1 className=" text-1xl md:text-3xl font-semibold mb-3">
             Discover New Place
           </h1>
         </div>
