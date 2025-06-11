@@ -1,6 +1,6 @@
-// page.js
+
 import DescoverBox from '../_components/DescoverBox';
-import { staticData } from '../_components/StaticDataModel'; // استورد البيانات
+import { staticData } from '../_components/StaticDataModel';
 
 export const metadata = {
   title: "Descover",

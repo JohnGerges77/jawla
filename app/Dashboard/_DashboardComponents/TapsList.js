@@ -33,11 +33,6 @@ const tapsData = [
    
     },
 
-    {
-      icon: '/images/help.png',
-      yellowIcon: '/images/help (1).png',
-      title: 'Help'
-    },
  
   ]
 function TapsList({ }) {
